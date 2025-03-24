@@ -1,0 +1,8 @@
+.header {
+    display: flex;
+    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-light));
+    width: 100%;
+    height: 100px;
+    justify-content: space-between;
+    align-items: center;
+}
