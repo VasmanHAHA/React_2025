@@ -1,11 +1,12 @@
-import { ColorSchemeToggle } from "@/components/ColorSchemeToggle/ColorSchemeToggle";
-import { NavBar } from "@/components/NawBar/naw-bar";
+import { ColorSchemeToggle } from "@/pages/mantine/components/color-scheme-toggle/ColorSchemeToggle";
 import classes from './header.module.css'
 import { routNames } from "@/config/routes";
+import { NavBar } from "@/shared/components/naw-bar/naw-bar";
+import { HeaderIcon } from "@/shared/components/header-icon/header-icon";
 
 export function Header() {
     return (<header className={classes.header}>
-        <div>MyIcon</div>
+        <HeaderIcon />
         <NavBar links={[
             { to: routNames.home, title: 'домой' },
             { to: routNames.redux, title: 'Redux', description: 'Redux по курсу Паромова' },
