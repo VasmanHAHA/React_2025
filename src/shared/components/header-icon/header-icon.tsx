@@ -7,20 +7,16 @@ interface HeaderIconProps {
     className?: string;
 }
 
+const ICON_MAP = {
+    light: lightIcon,
+    dark: darkIcon,
+
+  } as const;
+
 export function HeaderIcon({className} : HeaderIconProps) {
-    const { colorScheme } = useMantineColorScheme();  // 'light' | 'dark'
+    const { colorScheme } = useMantineColorScheme();
 
-    let iconSrc = lightIcon;
-
-    switch (colorScheme) {
-        case 'dark':
-            iconSrc = darkIcon;
-            break;
-        case 'light':
-            iconSrc = lightIcon;
-            break;
-    }
-
+    const iconSrc = ICON_MAP[colorScheme as keyof typeof ICON_MAP] ?? ICON_MAP.light;
 
     return (
         <div className={`${classes.iconContainer} ${className}`}>
