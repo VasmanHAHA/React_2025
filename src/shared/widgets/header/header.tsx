@@ -5,13 +5,15 @@ import { HeaderIcon } from "@/shared/components/header-icon/header-icon";
 import { ThemeController } from "@/shared/components/theme-controller/theme-controller";
 
 export function Header() {
-    return (<header className={classes.header}>
-        <HeaderIcon />
-        <NavBar links={[
-            { to: routNames.home, title: 'домой' },
-            { to: routNames.redux, title: 'Redux', description: 'Redux по курсу Паромова' },
-            { to: routNames.mantine, title: 'Mantine', description:' Приветственная страница Mantine' },
-        ]} />
-        <ThemeController />
-    </header>)
+    return (
+        <header className={classes.header}>
+            <HeaderIcon />
+            <NavBar links={[
+                { to: routNames.home, title: 'домой' },
+                { to: routNames.redux, title: 'Redux', description: 'Redux по курсу Паромова' },
+                { to: routNames.mantine, title: 'Mantine', description: ' Приветственная страница Mantine' },
+            ]} />
+            <ThemeController />
+        </header>
+    )
 }   
