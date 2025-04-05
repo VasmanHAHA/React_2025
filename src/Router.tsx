@@ -3,6 +3,7 @@ import { MantinePage } from './pages/mantine/Mantine.page';
 import { ReduxPage } from './pages/redux/Redux.page';
 import { HomePage } from './pages/home/Home.page';
 import { routNames } from './config/routes';
+import { TestsPage } from './pages/tests/TestsPage.page';
 
 
 const routes: RouteObject[] = [
@@ -17,6 +18,10 @@ const routes: RouteObject[] = [
   {
     path: routNames.mantine,
     element: <MantinePage />,
+  },
+  {
+    path: routNames.tests,
+    element: <TestsPage />,
   },
   {
     path: '*',
