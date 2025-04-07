@@ -25,8 +25,8 @@ export function NavBar(props: NavBarProps) {
                     description={description}
                     active={to === location}
                     variant="filled"
-                    renderRoot={(props) => {
-                        return <Link to={to}  {...props} />
+                    renderRoot={(props)=> {
+                       return <Link to={to}  {...props}/>
                     }}
                 />
             )}
