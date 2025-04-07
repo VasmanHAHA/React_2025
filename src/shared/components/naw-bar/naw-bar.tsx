@@ -18,9 +18,9 @@ export function NavBar(props: NavBarProps) {
 
     return (
         <nav className={classes.navBar}>
-            {links.map(({ to, title, description }) =>
+            {links.map(({ to, title, description }, index) =>
                 <NavLink
-                    key={to}
+                    key={index}
                     label={title}
                     description={description}
                     active={to === location}
