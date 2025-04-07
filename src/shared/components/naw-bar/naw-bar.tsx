@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import classes from './naw-bar.module.css';
 import { NavLink } from "@mantine/core";
 
@@ -20,12 +20,13 @@ export function NavBar(props: NavBarProps) {
         <nav className={classes.navBar}>
             {links.map(({ to, title, description }) =>
                 <NavLink
+                    key={to}
                     label={title}
                     description={description}
                     active={to === location}
                     variant="filled"
-                    renderRoot={(props)=> {
-                       return <Link to={to}  {...props}/>
+                    renderRoot={(props) => {
+                        return <Link to={to}  {...props} />
                     }}
                 />
             )}
