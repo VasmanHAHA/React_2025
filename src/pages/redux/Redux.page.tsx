@@ -1,6 +1,7 @@
 import { Header } from "@/shared/widgets/header/header";
 import classes from './classes.redux.page.module.css'
 import { Counter } from "./components/counter";
+import { UserList } from "./components/user-list";
 
 
 export function ReduxPage() {
@@ -13,7 +14,7 @@ export function ReduxPage() {
       <Counter counterId="id2" />
       <Counter counterId="id3" />
       </section>
-
+      <UserList />
     </>
   );
 }

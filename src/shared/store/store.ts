@@ -152,5 +152,5 @@ export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 export const useeAppStore = useStore.withTypes<typeof store>();
 
 export const selectCounter = (state: AppState, counterId: CounterId) => state.counters[counterId];
-export const selectUsers = (state : AppState) => state.users;
+export const selectUsers = (state : AppState) => state.users.entities;
 export const selectSelectedUserId = (state: AppState) => state.users.selectedUserId;
