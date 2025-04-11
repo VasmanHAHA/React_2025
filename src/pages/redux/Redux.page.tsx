@@ -8,9 +8,12 @@ export function ReduxPage() {
   return (
     <>
       <Header />
+      <section className={classes.countersContainer}>
       <Counter counterId="id1" />
       <Counter counterId="id2" />
       <Counter counterId="id3" />
+      </section>
+
     </>
   );
 }
