@@ -1,6 +1,5 @@
 import { CounterId, DecrementAction, IncrementAction, store } from "@/shared/store/store";
 import { Button } from "@mantine/core";
-import { useSyncExternalStore } from "react";
 import classes from './../classes.redux.page.module.css'
 
 interface CounterProps {
@@ -11,12 +10,7 @@ interface CounterProps {
 export function Counter(props: CounterProps) {
     const { counterId } = props;
 
-    const counterState = useSyncExternalStore(
-        (onStoreChange) => store.subscribe(onStoreChange),
-        () => store.getState().counters[counterId],
-    );
 
-    // const counterState = selectCounter(store.getState(), counterId);
 
     return (
         <section className={classes.counterSection}>
@@ -35,3 +29,12 @@ export function Counter(props: CounterProps) {
     )
 
 }
+
+// Древний подход:
+// import { useSyncExternalStore } from "react";
+
+// const counterState = useSyncExternalStore(
+//     (onStoreChange) => store.subscribe(onStoreChange),
+//     () => store.getState().counters[counterId],
+// );
+// const counterState = selectCounter(store.getState(), counterId);
