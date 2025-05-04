@@ -19,8 +19,12 @@ export function UserCard(props: UserCardProps) {
         <div
             className={`${classes.userCard} ${isSelected ? classes.selectedUserCard : ''
                 }`}
-            onClick={ () => {
-                dispatch({ type: 'userSelected', payload: { userId: id } } satisfies UserSelectedAction)} }
+            onClick={() => {
+                dispatch({
+                    type: 'userSelected',
+                    payload: { userId: id },
+                } satisfies UserSelectedAction);
+            }}
         >
             <h2 className={classes.userCardTitle}>User Card id:{id}</h2>
             <p className={classes.userCardName}>User Name: {name}</p>
