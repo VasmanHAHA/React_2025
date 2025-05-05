@@ -14,7 +14,7 @@ import { usersSlice } from './slices/users.slice';
 
 const reducer = combineReducers({
   counters: countersReducer,
-  users: usersSlice.reducer,
+  [usersSlice.name]: usersSlice.reducer,
 });
 
 export const store = configureStore({
