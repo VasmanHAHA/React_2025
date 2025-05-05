@@ -1,5 +1,6 @@
+import { selectSelectedUserId, selectUserData, UserRemoveSelectedAction, UserSelectedAction } from '@/shared/store/slices/users.slice';
 import classes from './../classes.redux.page.module.css'
-import { AppState, createAppSelector, selectSelectedUserId, useAppSelector, UserRemoveSelectedAction, UserSelectedAction } from "@/shared/store/store";
+import { AppState, createAppSelector, useAppSelector} from "@/shared/store/store";
 import { UserId } from '@/trash/mok-data/users';
 import { memo } from 'react';
 import { useDispatch } from "react-redux";
@@ -9,18 +10,10 @@ interface UserCardProps {
     userId: UserId;
 }
 
-const selectUserData = createAppSelector(
-    (state: AppState) => state.users.entities,
-    (_: AppState, id: UserId) => id,
-    (entities, id) => entities[id] ?? { id: 'not found', name: 'error', description: 'not found' }
-);
 
 
 
 export const UserCard = memo(function UserCard({ userId }: UserCardProps) {
-
-
-
     const dispatch = useDispatch();
 
     const userData = useAppSelector((state) => selectUserData(state, userId))
