@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, createSelector } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { User, UserId, users } from '@/trash/mok-data/users';
 
@@ -8,8 +8,10 @@ interface CounterState {
 
 export type CounterId = string;
 
+export type CountersState = Record<CounterId, CounterState | undefined>;
+
 export interface State {
-  counters: Record<CounterId, CounterState | undefined>;
+  counters: CountersState;
   users: UsersState;
 }
 
@@ -53,6 +55,9 @@ export type Action =
   | UsersStoredAction;
 
 const initialCounterState: CounterState = { counter: 0 };
+
+const initialCountersState: CountersState = {};
+
 const initialUsersState: UsersState = {
   entities: {},
   ids: [],
@@ -69,69 +74,66 @@ interface UsersState {
   selectedUserId: UserId | undefined;
 }
 
-const reducer = (state = initialState, action: Action): State => {
+const reducer = (state = initialState, action: Action): State => ({
+  users: usersReducer(state.users, action),
+  counters: countersReducer(state.counters, action),
+});
+
+const countersReducer = (state = initialCountersState, action: Action) => {
   switch (action.type) {
     case 'increment': {
       const { counterId } = action.payload;
-      const currentCounter = state.counters[counterId] ?? initialCounterState;
+      const currentCounter = state[counterId] ?? initialCounterState;
       return {
-        ...state,
-        counters: {
-          ...state.counters,
+          ...state,
           [counterId]: {
             ...currentCounter,
             counter: currentCounter.counter + 1,
-          },
-        },
+          }
       };
     }
     case 'decrement': {
       const { counterId } = action.payload;
-      const currentCounter = state.counters[counterId] ?? initialCounterState;
-      return {
-        ...state,
-        counters: {
-          ...state.counters,
+      const currentCounter = state[counterId] ?? initialCounterState;
+      return  {
+          ...state,
           [counterId]: {
             ...currentCounter,
             counter: currentCounter.counter - 1,
           },
-        },
-      };
+        };
     }
+    default:
+      return state;
+  }
+};
+
+const usersReducer = (state = initialUsersState, action: Action) => {
+  switch (action.type) {
     case 'userSelected': {
       const { userId } = action.payload;
-      return {
-        ...state,
-        users: {
-          ...state.users,
+      return  {
+          ...state,
           selectedUserId: userId,
-        },
-      };
+        }
     }
     case 'userRemoveSelected': {
       return {
-        ...state,
-        users: {
-          ...state.users,
+          ...state,
           selectedUserId: undefined,
-        },
-      };
+        };
     }
     case 'usersStored': {
       const { users } = action.payload;
       return {
-        ...state,
-        users: {
-          ...state.users,
+          ...state,
           entities: users.reduce((acc: Record<UserId, User | undefined>, user) => {
             acc[user.id] = user;
             return acc;
           }, {}),
           ids: users.map((user) => user.id),
-          selectedUserId: users.find((user) => user.id === state.users.selectedUserId)?.id,
-        },
-      };
+          selectedUserId: users.find((user) => user.id === state.selectedUserId)?.id,
+        };
     }
     default:
       return state;
@@ -150,7 +152,8 @@ export type AppDispatch = typeof store.dispatch;
 export const useAppSelector = useSelector.withTypes<AppState>();
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 export const useeAppStore = useStore.withTypes<typeof store>();
+export const createAppSelector = createSelector.withTypes<AppState>();
 
 export const selectCounter = (state: AppState, counterId: CounterId) => state.counters[counterId];
-export const selectUsers = (state : AppState) => state.users.entities;
+export const selectUsers = (state: AppState) => state.users.entities;
 export const selectSelectedUserId = (state: AppState) => state.users.selectedUserId;

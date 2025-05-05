@@ -1,34 +1,64 @@
-import { User } from "@/trash/mok-data/users"
 import classes from './../classes.redux.page.module.css'
-import { selectSelectedUserId, useAppSelector, UserSelectedAction } from "@/shared/store/store";
+import { AppState, createAppSelector, selectSelectedUserId, useAppSelector, UserRemoveSelectedAction, UserSelectedAction } from "@/shared/store/store";
+import { UserId } from '@/trash/mok-data/users';
+import { memo } from 'react';
 import { useDispatch } from "react-redux";
 
 
 interface UserCardProps {
-    user: User;
+    userId: UserId;
 }
 
-export function UserCard(props: UserCardProps) {
-    const { name, description, id } = props.user
+const selectUserData = createAppSelector(
+    (state: AppState) => state.users.entities,
+    (_: AppState, id: UserId) => id,
+    (entities, id) => entities[id] ?? { id: 'not found', name: 'error', description: 'not found' }
+);
+
+
+
+export const UserCard = memo(function UserCard({ userId }: UserCardProps) {
+
+
+
     const dispatch = useDispatch();
 
-    const selectedUser = useAppSelector((state) => selectSelectedUserId(state))
-    const isSelected = selectedUser === id;
+    const userData = useAppSelector((state) => selectUserData(state, userId))
+    const { name, description, id } = userData;
 
+    const selectedUserId = useAppSelector((state) => selectSelectedUserId(state));
+    const isSelected = userId === selectedUserId;
+
+    const selectUser = () => {
+        dispatch({
+            type: 'userSelected',
+            payload: { userId: id },
+        } satisfies UserSelectedAction);
+    }
+
+    const removeUserSelection = () => {
+        dispatch({
+            type: 'userRemoveSelected',
+        } satisfies UserRemoveSelectedAction);
+    }
+
+    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation();
+        if (isSelected) {
+            removeUserSelection();
+        } else {
+            selectUser();
+        }
+    }
     return (
         <div
             className={`${classes.userCard} ${isSelected ? classes.selectedUserCard : ''
                 }`}
-            onClick={() => {
-                dispatch({
-                    type: 'userSelected',
-                    payload: { userId: id },
-                } satisfies UserSelectedAction);
-            }}
+            onClick={handleClick}
         >
             <h2 className={classes.userCardTitle}>User Card id:{id}</h2>
             <p className={classes.userCardName}>User Name: {name}</p>
             <p className={classes.userCardDescription}>User Description: {description}</p>
         </div>
     )
-}
+})
