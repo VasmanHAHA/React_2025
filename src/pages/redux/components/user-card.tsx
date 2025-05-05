@@ -1,6 +1,6 @@
-import { selectSelectedUserId, selectUserData, UserRemoveSelectedAction, UserSelectedAction } from '@/shared/store/slices/users.slice';
+import { usersSlice } from '@/shared/store/slices/users.slice';
 import classes from './../classes.redux.page.module.css'
-import { AppState, useAppSelector} from "@/shared/store/store";
+import { useAppSelector} from "@/shared/store/store";
 import { UserId } from '@/trash/mok-data/users';
 import { memo } from 'react';
 import { useDispatch } from "react-redux";
@@ -16,23 +16,18 @@ interface UserCardProps {
 export const UserCard = memo(function UserCard({ userId }: UserCardProps) {
     const dispatch = useDispatch();
 
-    const userData = useAppSelector((state) => selectUserData(state, userId))
+    const userData = useAppSelector((state) => usersSlice.selectors.selectUserData(state, userId))
     const { name, description, id } = userData;
 
-    const selectedUserId = useAppSelector((state) => selectSelectedUserId(state));
+    const selectedUserId = useAppSelector((state) => usersSlice.selectors.selectSelectedUserId(state));
     const isSelected = userId === selectedUserId;
 
     const selectUser = () => {
-        dispatch({
-            type: 'userSelected',
-            payload: { userId: id },
-        } satisfies UserSelectedAction);
+        dispatch(usersSlice.actions.selected({ userId }))
     }
 
     const removeUserSelection = () => {
-        dispatch({
-            type: 'userRemoveSelected',
-        } satisfies UserRemoveSelectedAction);
+        dispatch( usersSlice.actions.selectRemove());
     }
 
     const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {

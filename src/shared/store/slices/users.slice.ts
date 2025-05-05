@@ -1,24 +1,5 @@
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User, UserId } from '@/trash/mok-data/users';
-import { AppState } from '../store';
-import { createSelector } from '@reduxjs/toolkit';
-
-export interface UserSelectedAction {
-  type: 'userSelected';
-  payload: {
-    userId: UserId;
-  };
-}
-
-export interface UserRemoveSelectedAction {
-  type: 'userRemoveSelected';
-}
-
-export interface UsersStoredAction {
-  type: 'usersStored';
-  payload: {
-    users: User[];
-  };
-}
 
 const initialUsersState: UsersState = {
   entities: {},
@@ -32,64 +13,47 @@ interface UsersState {
   selectedUserId: UserId | undefined;
 }
 
-
-
-type Action =
-  | UserSelectedAction
-  | UserRemoveSelectedAction
-  | UsersStoredAction;
-export const usersReducer = (state = initialUsersState, action: Action) => {
-  switch (action.type) {
-    case 'userSelected': {
-      const { userId } = action.payload;
-      return {
-        ...state,
-        selectedUserId: userId,
-      };
-    }
-    case 'userRemoveSelected': {
-      return {
-        ...state,
-        selectedUserId: undefined,
-      };
-    }
-    case 'usersStored': {
-      const { users } = action.payload;
-      return {
-        ...state,
-        entities: users.reduce((acc: Record<UserId, User | undefined>, user) => {
-          acc[user.id] = user;
-          return acc;
-        }, {}),
-        ids: users.map((user) => user.id),
-        selectedUserId: users.find((user) => user.id === state.selectedUserId)?.id,
-      };
-    }
-    default:
-      return state;
-  }
-};
-
-export const selectUsers = (state: AppState) => state.users.entities;
-export const selectSelectedUserId = (state: AppState) => state.users.selectedUserId;
-
-const createAppSelector = createSelector.withTypes<AppState>();
-export const selectUserData = createAppSelector(
-    (state: AppState) => state.users.entities,
-    (_: AppState, id: UserId) => id,
-    (entities, id) => entities[id] ?? { id: 'not found', name: 'error', description: 'not found' }
-);
-
-export const selectSortedUsers = createAppSelector(
-  (state: AppState) => state.users.ids,
-  (state: AppState) => state.users.entities,
-  (_: AppState, sortType: "asc" | "desc") => sortType,
-  (ids, entities, sortType) => ids.map(id => entities[id] ?? { id: 'not found', name: 'error', description: 'not found' })
-      .sort((a, b) => {
-          if (sortType === 'asc') {
+export const usersSlice = createSlice({
+  name: 'users',
+  initialState: initialUsersState,
+  reducers: {
+    selected(state, action: PayloadAction<{ userId: UserId }>) {
+      state.selectedUserId = action.payload.userId;
+    },
+    selectRemove(state) {
+      state.selectedUserId = undefined;
+    },
+    stored(state, action: PayloadAction<{ users: User[] }>) {
+      const users = action.payload.users;
+      state.entities = users.reduce((acc, user) => {
+        acc[user.id] = user;
+        return acc;
+      }, {} as Record<UserId, User>);
+      state.ids = users.map((user) => user.id);
+    },
+  },
+  selectors: {
+    selectSelectedUserId: (state) => state.selectedUserId,
+    selectUsers: (state) => state.entities,
+    selectSortedUsers:  createSelector(
+      (state: UsersState) => state.ids,
+      (state: UsersState) => state.entities,
+      (_: UsersState, sortType: 'asc' | 'desc') => sortType,
+      (ids, entities, sortType) =>
+        ids
+          .map((id) => entities[id] ?? { id: 'not found', name: 'error', description: 'not found' })
+          .sort((a, b) => {
+            if (sortType === 'asc') {
               return a.name.localeCompare(b.name);
-          } else {
+            } else {
               return b.name.localeCompare(a.name);
-          }
-      })
-);
+            }
+          })
+    ),
+    selectUserData: createSelector(
+      (state: UsersState) => state.entities,
+      (_: UsersState, id: UserId) => id,
+      (entities, id) => entities[id] ?? { id: 'not found', name: 'error', description: 'not found' }
+    ),
+  }
+});
