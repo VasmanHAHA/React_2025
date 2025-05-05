@@ -1,5 +1,6 @@
 import { User, UserId } from '@/trash/mok-data/users';
-import { AppState, createAppSelector } from '../store';
+import { AppState } from '../store';
+import { createSelector } from '@reduxjs/toolkit';
 
 export interface UserSelectedAction {
   type: 'userSelected';
@@ -72,6 +73,7 @@ export const usersReducer = (state = initialUsersState, action: Action) => {
 export const selectUsers = (state: AppState) => state.users.entities;
 export const selectSelectedUserId = (state: AppState) => state.users.selectedUserId;
 
+const createAppSelector = createSelector.withTypes<AppState>();
 export const selectUserData = createAppSelector(
     (state: AppState) => state.users.entities,
     (_: AppState, id: UserId) => id,

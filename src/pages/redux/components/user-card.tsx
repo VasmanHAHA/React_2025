@@ -1,6 +1,6 @@
 import { selectSelectedUserId, selectUserData, UserRemoveSelectedAction, UserSelectedAction } from '@/shared/store/slices/users.slice';
 import classes from './../classes.redux.page.module.css'
-import { AppState, createAppSelector, useAppSelector} from "@/shared/store/store";
+import { AppState, useAppSelector} from "@/shared/store/store";
 import { UserId } from '@/trash/mok-data/users';
 import { memo } from 'react';
 import { useDispatch } from "react-redux";

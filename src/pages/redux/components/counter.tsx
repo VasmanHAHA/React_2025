@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/shared/store/store";
 import { Button } from "@mantine/core";
 import classes from './../classes.redux.page.module.css'
-import { CounterId, DecrementAction, IncrementAction, selectCounter } from "@/shared/store/slices/counters.slice";
+import { CounterId,  selectCounter, decrementAction, incrementAction } from "@/shared/store/slices/counters.slice";
 
 interface CounterProps {
     counterId: CounterId;
@@ -13,16 +13,16 @@ export function Counter(props: CounterProps) {
     const dispatch = useAppDispatch();
     const counterState = useAppSelector((state) => selectCounter(state, counterId))
 
-    console.log(`counter = ${counterId} rendered`)
+    
 
     return (
         <div className={classes.counter}>
             <Button onClick={() => {
-                dispatch({ type: "increment", payload: { counterId } } satisfies IncrementAction)
+                dispatch(incrementAction({ counterId }))
             }
             }> Increment</Button>
             <Button onClick={() => {
-                dispatch({ type: "decrement", payload: { counterId } } satisfies DecrementAction)
+                dispatch(decrementAction({ counterId }))
             }
             }
 
