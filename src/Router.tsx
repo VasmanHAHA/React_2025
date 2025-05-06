@@ -2,9 +2,22 @@ import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-d
 import { MantinePage } from './pages/mantine/Mantine.page';
 import { ReduxPage } from './pages/redux/Redux.page';
 import { HomePage } from './pages/home/Home.page';
-import { routNames } from './config/routes';
+import { reduxRoutNames, routNames } from './config/routes';
 import { TestsPage } from './pages/tests/TestsPage.page';
+import { CountersContainer } from './pages/redux/components/counters-container';
+import { UserList } from './pages/redux/components/user-list';
 
+
+const reduxRoutes: RouteObject[] = [
+  {
+    path: reduxRoutNames.counters,
+    element: <CountersContainer />,
+  },
+  {
+    path: reduxRoutNames.users,
+    element: <UserList />,
+  },
+]
 
 const routes: RouteObject[] = [
   {
@@ -14,6 +27,7 @@ const routes: RouteObject[] = [
   {
     path: routNames.redux,
     element: <ReduxPage />,
+    children: reduxRoutes,
   },
   {
     path: routNames.mantine,
