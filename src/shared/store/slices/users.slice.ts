@@ -1,17 +1,21 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User, UserId } from '@/trash/mok-data/users';
 
-const initialUsersState: UsersState = {
-  entities: {},
-  ids: [],
-  selectedUserId: undefined,
-};
+
 
 interface UsersState {
   entities: Record<UserId, User | undefined>;
   ids: UserId[];
   selectedUserId: UserId | undefined;
+  fetchUsersStatus: 'idle' | 'pending' | 'success' | 'failed';
 }
+
+const initialUsersState: UsersState = {
+  entities: {},
+  ids: [],
+  selectedUserId: undefined,
+  fetchUsersStatus: 'idle',
+};
 
 export const usersSlice = createSlice({
   name: 'users',
@@ -23,13 +27,20 @@ export const usersSlice = createSlice({
     selectRemove(state) {
       state.selectedUserId = undefined;
     },
-    stored(state, action: PayloadAction<{ users: User[] }>) {
+    fetchUsersPending(state) {
+      state.fetchUsersStatus = 'pending';
+    },
+    fetchUsersSuccess(state, action: PayloadAction<{ users: User[] }>) {
+      state.fetchUsersStatus = 'success';
       const users = action.payload.users;
       state.entities = users.reduce((acc, user) => {
         acc[user.id] = user;
         return acc;
       }, {} as Record<UserId, User>);
       state.ids = users.map((user) => user.id);
+    },
+    fetchUsersFailed(state) {
+      state.fetchUsersStatus = 'failed';
     },
   },
   selectors: {
@@ -55,5 +66,7 @@ export const usersSlice = createSlice({
       (_: UsersState, id: UserId) => id,
       (entities, id) => entities[id] ?? { id: 'not found', name: 'error', description: 'not found' }
     ),
+    selectIsFetchUsersPending: (state) => state.fetchUsersStatus === 'pending',
+    selectFetchUsersIdle: (state) => state.fetchUsersStatus === 'idle',
   }
 });
