@@ -4,8 +4,8 @@ import { UserCard } from './user-card';
 import { useAppSelector, useAppStore } from '@/shared/store/store';
 import { UserFilters } from './user-filters';
 import { usersSlice } from '@/shared/store/slices/users.slice';
-import { api } from '@/shared/api';
 import { useDispatch } from 'react-redux';
+import { fetchUsers } from '../model/fetch-users';
 
 
 
@@ -19,18 +19,7 @@ export function UserList() {
     const isPending = useAppSelector(usersSlice.selectors.selectIsFetchUsersPending);
 
     useEffect(() => {
-        const isIdle = usersSlice.selectors.selectFetchUsersIdle(
-            appStore.getState()
-        );
-        if (!isIdle) {
-            return;
-        }
-        dispatch(usersSlice.actions.fetchUsersPending())
-        api.getUsers().then(users => {
-            dispatch(usersSlice.actions.fetchUsersSuccess({ users }))
-        }).catch(() => {
-            dispatch(usersSlice.actions.fetchUsersFailed())
-        });
+        fetchUsers(appStore.dispatch, appStore.getState)
     }, [dispatch, appStore])
 
     const sortedUsers = useAppSelector((state) => usersSlice.selectors.selectSortedUsers(state, sortType))

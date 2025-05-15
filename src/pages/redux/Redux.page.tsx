@@ -2,7 +2,6 @@ import { Header } from "@/shared/widgets/header/header";
 import { NavBar } from "@/shared/components/naw-bar/naw-bar";
 import { Outlet } from "react-router-dom";
 import { reduxRoutNames } from "@/config/routes";
-import { UserList } from "./components/user-list";
 
 
 export function ReduxPage() {
