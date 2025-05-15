@@ -4,7 +4,9 @@
   "type": "module",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev:client": "vite",
+    "dev:server": "json-server db.json",
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\" ",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",

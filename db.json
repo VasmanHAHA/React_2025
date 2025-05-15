@@ -1,0 +1,28 @@
+{
+ "users": [
+    {
+        "id": "user1",
+        "name": "John Doe",
+        "description": "Software Engineer"
+    }
+    , {
+        "id": "user2",
+        "name": "Jane Smith",
+        "description": "Data Scientist"
+    },
+    {
+        "id": "user3",
+        "name": "Alice Johnson",
+        "description": "Project Manager"
+    }, {
+        "id": "user4",
+        "name": "Bob Brown",
+        "description": "UX Designer"
+    }, {
+        "id": "user5",
+        "name": "Charlie Davis",
+        "description": "Product Manager"
+    }
+
+ ]
+}

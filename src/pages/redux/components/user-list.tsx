@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classes from './../classes.redux.page.module.css'
 import { UserCard } from './user-card';
 import { useAppSelector } from '@/shared/store/store';
 import { UserFilters } from './user-filters';
 import { usersSlice } from '@/shared/store/slices/users.slice';
+import { api } from '@/shared/api';
 
 
 
@@ -11,6 +12,13 @@ import { usersSlice } from '@/shared/store/slices/users.slice';
 export function UserList() {
 
     const [sortType, setSortType] = useState<"asc" | "desc">("asc");
+
+    useEffect(()=> {
+     api.getUsers().then(users => {
+        console.log(users);
+     });
+    })
+
     const sortedUsers = useAppSelector((state)=> usersSlice.selectors.selectSortedUsers(state, sortType))
 
     return (
