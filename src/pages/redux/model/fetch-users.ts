@@ -1,8 +1,8 @@
-import { api } from '@/shared/api';
 import { usersSlice } from '@/shared/store/slices/users.slice';
-import { AppDispatch, AppState } from '@/shared/store/store';
+import { AppThunk } from '@/shared/store/store';
 
-export const fetchUsers = (dispatch: AppDispatch, getState: () => AppState) => {
+// thunk in use
+export const fetchUsers = (): AppThunk => (dispatch, getState, {api}) => {
   const isIdle = usersSlice.selectors.selectFetchUsersIdle(getState());
   if (!isIdle) {
     return;

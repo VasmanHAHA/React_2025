@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import classes from './../classes.redux.page.module.css'
 import { UserCard } from './user-card';
-import { useAppSelector, useAppStore } from '@/shared/store/store';
+import { useAppDispatch, useAppSelector, useAppStore } from '@/shared/store/store';
 import { UserFilters } from './user-filters';
 import { usersSlice } from '@/shared/store/slices/users.slice';
 import { useDispatch } from 'react-redux';
@@ -11,7 +11,7 @@ import { fetchUsers } from '../model/fetch-users';
 
 
 export function UserList() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const appStore = useAppStore();
 
     const [sortType, setSortType] = useState<"asc" | "desc">("asc");
@@ -19,7 +19,7 @@ export function UserList() {
     const isPending = useAppSelector(usersSlice.selectors.selectIsFetchUsersPending);
 
     useEffect(() => {
-        fetchUsers(appStore.dispatch, appStore.getState)
+        dispatch(fetchUsers())
     }, [dispatch, appStore])
 
     const sortedUsers = useAppSelector((state) => usersSlice.selectors.selectSortedUsers(state, sortType))
