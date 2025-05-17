@@ -66,12 +66,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
-  .userCard:active {
-    background-color: #d2e3fc; /* Более темный синий фон при нажатии */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Уменьшенная тень для эффекта "нажатия" */
-    transform: scale(0.98); /* Легкое уменьшение для эффекта нажатия */
-  }
-  
   .userCardTitle {
     font-size: 18px;
     font-weight: 500;

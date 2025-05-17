@@ -1,23 +1,20 @@
-import { usersSlice } from '@/shared/store/slices/users.slice';
+import { useDispatch } from 'react-redux';
 import classes from './../classes.redux.page.module.css'
-import { useAppSelector} from "@/shared/store/store";
-import { UserId } from '@/trash/mok-data/users';
-import { memo } from 'react';
-import { useDispatch } from "react-redux";
-import { Button } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '@/shared/store/store';
+import { usersSlice } from '@/shared/store/slices/users.slice';
+import { useParams } from 'react-router-dom';
 
 
-interface UserCardProps {
-    userId: UserId;
+interface UserPageProps {
+
 }
-
-
-
-
-export const UserCard = memo(function UserCard({ userId }: UserCardProps) {
+export function UserPage(props: UserPageProps) {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const {userId} = useParams()
+
+    if (!userId) {
+        return <p>Пользователь не найден</p>
+    }
 
     const userData = useAppSelector((state) => usersSlice.selectors.selectUserData(state, userId))
     const { name, description, id } = userData;
@@ -30,35 +27,27 @@ export const UserCard = memo(function UserCard({ userId }: UserCardProps) {
     }
 
     const removeUserSelection = () => {
-        dispatch( usersSlice.actions.selectRemove());
+        dispatch(usersSlice.actions.selectRemove());
     }
 
-    const selectCard = (event: React.MouseEvent<HTMLDivElement>) => {
+    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation();
         if (isSelected) {
             removeUserSelection();
         } else {
             selectUser();
         }
     }
-
-   const gotoCard = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.stopPropagation();
-        navigate(userId)
-   }
- 
-
     return (
         <div
             className={`${classes.userCard} ${isSelected ? classes.selectedUserCard : ''
                 }`}
-            onClick={selectCard}
+            onClick={handleClick}
         >
             <h2 className={classes.userCardTitle}>User Card id:{id}</h2>
             <p className={classes.userCardName}>User Name: {name}</p>
             <p className={classes.userCardDescription}>User Description: {description}</p>
-            <Button
-                onClick={(e) =>gotoCard(e)}
-            >Подробнее</Button>
         </div>
     )
-})
+
+}
