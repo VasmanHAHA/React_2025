@@ -1,7 +1,7 @@
 import { usersSlice } from "@/shared/store/slices/users.slice"
-import { AppThunk } from "@/shared/store/store"
 import { UserId } from "@/trash/mok-data/users"
 import { fetchUsers } from "./fetch-users"
+import { AppThunk } from "@/shared/store/redux"
 
 export const deleteUser = 
 (userId: UserId): AppThunk<Promise<void>> => 

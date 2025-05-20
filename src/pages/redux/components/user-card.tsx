@@ -1,11 +1,11 @@
 import { usersSlice } from '@/shared/store/slices/users.slice';
 import classes from './../classes.redux.page.module.css'
-import { useAppSelector} from "@/shared/store/store";
 import { UserId } from '@/trash/mok-data/users';
 import { memo } from 'react';
 import { useDispatch } from "react-redux";
 import { Button } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '@/shared/store/redux';
 
 
 interface UserCardProps {

@@ -1,10 +1,10 @@
 import { useDispatch } from 'react-redux';
 import classes from './../classes.redux.page.module.css'
-import { useAppDispatch, useAppSelector } from '@/shared/store/store';
 import { usersSlice } from '@/shared/store/slices/users.slice';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@mantine/core';
 import { deleteUser } from '../model/delete-user';
+import { useAppDispatch, useAppSelector } from '@/shared/store/redux';
 
 
 interface UserPageProps {

@@ -1,7 +1,7 @@
-import { useAppDispatch, useAppSelector } from "@/shared/store/store";
 import { Button } from "@mantine/core";
 import classes from './../classes.redux.page.module.css'
 import { CounterId,  selectCounter, decrementAction, incrementAction } from "@/shared/store/slices/counters.slice";
+import { useAppDispatch, useAppSelector } from "@/shared/store/redux";
 
 interface CounterProps {
     counterId: CounterId;

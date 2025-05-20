@@ -1,19 +1,15 @@
-import { useEffect, useState } from 'react';
+import {useState } from 'react';
 import classes from './../classes.redux.page.module.css'
 import { UserCard } from './user-card';
-import { useAppDispatch, useAppSelector, useAppStore } from '@/shared/store/store';
 import { UserFilters } from './user-filters';
 import { usersSlice } from '@/shared/store/slices/users.slice';
-import { useDispatch } from 'react-redux';
-import { fetchUsers } from '../model/fetch-users';
+import {  useAppSelector} from '@/shared/store/redux';
+
 
 
 
 
 export function UserList() {
-    const dispatch = useAppDispatch();
-    const appStore = useAppStore();
-
     const [sortType, setSortType] = useState<"asc" | "desc">("asc");
 
     const isPending = useAppSelector(usersSlice.selectors.selectIsFetchUsersPending);
