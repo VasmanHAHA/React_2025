@@ -1,5 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User, UserId } from '@/trash/mok-data/users';
+import { fetchUsers } from '@/pages/redux/model/fetch-users';
 
 interface UsersState {
   entities: Record<UserId, User | undefined>;
@@ -27,24 +28,26 @@ export const usersSlice = createSlice({
     selectRemove(state) {
       state.selectedUserId = undefined;
     },
-    fetchUsersPending(state) {
-      state.fetchUsersStatus = 'pending';
-    },
-    fetchUsersSuccess(state, action: PayloadAction<{ users: User[] }>) {
-      state.fetchUsersStatus = 'success';
-      const users = action.payload.users;
-      state.entities = users.reduce(
-        (acc, user) => {
-          acc[user.id] = user;
-          return acc;
-        },
-        {} as Record<UserId, User>
-      );
-      state.ids = users.map((user) => user.id);
-    },
-    fetchUsersFailed(state) {
-      state.fetchUsersStatus = 'failed';
-    },
+    // goto extraReducers 
+    //
+    // fetchUsersPending(state) {
+    //   state.fetchUsersStatus = 'pending';
+    // },
+    // fetchUsersSuccess(state, action: PayloadAction<{ users: User[] }>) {
+    //   state.fetchUsersStatus = 'success';
+    //   const users = action.payload.users;
+    //   state.entities = users.reduce(
+    //     (acc, user) => {
+    //       acc[user.id] = user;
+    //       return acc;
+    //     },
+    //     {} as Record<UserId, User>
+    //   );
+    //   state.ids = users.map((user) => user.id);
+    // },
+    // fetchUsersFailed(state) {
+    //   state.fetchUsersStatus = 'failed';
+    // },
     deleteUserPending(state) {
       state.deleteUserStatus = 'pending';
     },
@@ -56,6 +59,26 @@ export const usersSlice = createSlice({
     deleteUserFailed(state) {
       state.deleteUserStatus = 'failed';
     },
+  },
+  extraReducers:builder => {
+      builder.addCase(fetchUsers.pending, (state) => {
+        state.fetchUsersStatus = 'pending';
+      }),
+      builder.addCase(fetchUsers.fulfilled, (state, action) => {
+        state.fetchUsersStatus = 'success';
+        const users = action.payload
+        state.entities = users.reduce(
+          (acc, user) => {
+            acc[user.id] = user;
+            return acc;
+          },
+          {} as Record<UserId, User>
+        );
+        state.ids = users.map((user) => user.id);
+      }),
+      builder.addCase(fetchUsers.rejected, (state) => {
+        state.fetchUsersStatus = 'failed';
+      })
   },
   selectors: {
     selectSelectedUserId: (state) => state.selectedUserId,
