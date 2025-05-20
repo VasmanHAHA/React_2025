@@ -1,6 +1,7 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, PayloadAction } from '@reduxjs/toolkit';
 import { User, UserId } from '@/trash/mok-data/users';
 import { fetchUsers } from '@/pages/redux/model/fetch-users';
+import { createSlice } from '../redux';
 
 interface UsersState {
   entities: Record<UserId, User | undefined>;
@@ -21,7 +22,7 @@ const initialUsersState: UsersState = {
 export const usersSlice = createSlice({
   name: 'users',
   initialState: initialUsersState,
-  reducers: {
+  reducers:  {
     selected(state, action: PayloadAction<{ userId: UserId }>) {
       state.selectedUserId = action.payload.userId;
     },
@@ -108,3 +109,35 @@ export const usersSlice = createSlice({
     selectIsDeleteUserPending: (state) => state.deleteUserStatus === 'pending',
   },
 });
+
+
+// вариант createAsyncThunk внутри слайса
+
+// reducers: (creator) => ({
+
+// create reducer
+// creator.reducer( selected(state, action: PayloadAction<{ userId: UserId }>) {
+//   state.selectedUserId = action.payload.userId;
+// }),
+
+//   //create async thunk
+//   fetchUser: creator.asyncThunk<User, { userId: UserId }, { extra: ExtraArgument }>(
+//     (params, thunkAPI) => {
+//       return thunkAPI.extra.api.getUserById(params.userId);
+//     },
+//     {
+//       pending: (state) => {
+//         state.fetchUserStatus = 'pending';
+//       },
+//       fulfilled: (state, action) => {
+//         const user = action.payload;
+//         state.fetchUserStatus = 'success';
+//         state.entities[user.id] = user;
+//       },
+//       rejected: (state) => {
+//         state.fetchUserStatus = 'failed';
+//       },
+//     }
+//   ),
+// 
+// }),

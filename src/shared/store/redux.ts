@@ -1,4 +1,4 @@
-import {  createAsyncThunk, ThunkAction, UnknownAction } from '@reduxjs/toolkit';
+import {  asyncThunkCreator, buildCreateSlice, createAsyncThunk, ThunkAction, UnknownAction } from '@reduxjs/toolkit';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { extraArgument } from './extra-argument';
 import type { store } from './store';
@@ -17,3 +17,7 @@ export const createAppAsyncThunk = createAsyncThunk.withTypes<{
     dispatch: AppDispatch;
     extra: typeof extraArgument;
 }>();
+
+export const createSlice = buildCreateSlice({
+    creators: {asyncThunk: asyncThunkCreator}  // изначально createSlice не имеет доступа к asyncThunkCreator
+})

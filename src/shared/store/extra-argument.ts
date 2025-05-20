@@ -7,3 +7,5 @@ export const extraArgument = {
       return getRouter();
     },
   }
+
+export type ExtraArgument = typeof extraArgument;
