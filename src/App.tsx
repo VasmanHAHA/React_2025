@@ -9,7 +9,7 @@ import { fetchUsers } from './pages/redux/model/fetch-users';
 import { RouterProvider } from 'react-router-dom';
 
 // параллельная загрузка данных при загрузке страницы
-store.dispatch(fetchUsers({}))
+// store.dispatch(fetchUsers({}))
 
 export default function App() {
   return (

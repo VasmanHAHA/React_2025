@@ -18,9 +18,10 @@ export function UserList() {
 
     const isPending = useAppSelector(usersSlice.selectors.selectIsFetchUsersPending);
 
-    useEffect(() => {
-        dispatch(fetchUsers({}))
-    }, [dispatch, appStore])
+    // перенесено в router
+    // useEffect(() => {
+    //     dispatch(fetchUsers({}))
+    // }, [dispatch, appStore])
 
     const sortedUsers = useAppSelector((state) => usersSlice.selectors.selectSortedUsers(state, sortType))
 

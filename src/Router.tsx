@@ -7,6 +7,8 @@ import { TestsPage } from './pages/tests/TestsPage.page';
 import { CountersContainer } from './pages/redux/components/counters-container';
 import { UserList } from './pages/redux/components/user-list';
 import { UserPage } from './pages/redux/components/user-page';
+import { store } from './shared/store/store';
+import { fetchUsers } from './pages/redux/model/fetch-users';
 
 
 const reduxRoutes: RouteObject[] = [
@@ -20,11 +22,15 @@ const reduxRoutes: RouteObject[] = [
   },
   {
     path: reduxRoutNames.users + '/:userId',
-    element: <UserPage />
+    element: <UserPage />,
   },
   {
     path: reduxRoutNames.users,
     element: <UserList />,
+    loader: () => {
+      store.dispatch(fetchUsers({}));
+      return null;
+    }
   },
 ]
 
