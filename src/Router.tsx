@@ -52,8 +52,7 @@ const routes: RouteObject[] = [
   },
 ];
 
-const router = createBrowserRouter(routes);
-
-export function Router() {
-  return <RouterProvider router={router} />;
+export const router = createBrowserRouter(routes);
+export function getRouter() {
+  return router;
 }

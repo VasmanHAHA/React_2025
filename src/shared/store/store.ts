@@ -2,7 +2,8 @@ import { combineReducers, configureStore, ThunkAction, UnknownAction } from '@re
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { countersReducer, } from './slices/counters.slice';
 import { usersSlice } from './slices/users.slice';
-import { api } from '../api';
+
+import { extraArgument } from './extra-argument';
 
 
 // reducer под капотом
@@ -10,10 +11,6 @@ import { api } from '../api';
 //   users: usersReducer(state.users, action),
 //   counters: countersReducer(state.counters, action),
 // });
-
-const extraArgument = {
-  api
-}
 
 
 const reducer = combineReducers({

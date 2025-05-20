@@ -19,7 +19,7 @@ export function UserList() {
     const isPending = useAppSelector(usersSlice.selectors.selectIsFetchUsersPending);
 
     useEffect(() => {
-        dispatch(fetchUsers())
+        dispatch(fetchUsers({}))
     }, [dispatch, appStore])
 
     const sortedUsers = useAppSelector((state) => usersSlice.selectors.selectSortedUsers(state, sortType))
