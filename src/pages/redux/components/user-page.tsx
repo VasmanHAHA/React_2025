@@ -44,8 +44,10 @@ export function UserPage(props: UserPageProps) {
     const deleteCard = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
         //    const result = await dispatch(deleteUser(userId))
-        // navigate может быть здесь
-        deleteUser(userId);
+        
+       await deleteUser(userId);
+       // navigate может быть здесь
+       navigate(`..`, {relative: 'path'})
     }
     return (
         <div className={`${classes.userCard}`}>
