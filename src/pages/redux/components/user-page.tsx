@@ -18,13 +18,21 @@ export function UserPage(props: UserPageProps) {
 
     const { userId } = useParams()
 
-    const {data: user, isLoading} = usersApi.useGetUserQuery(userId ?? skipToken);
-
-    if (!userId || !user) {
+    if (!userId) {
         return <p>Пользователь не найден</p>
     }
 
+
+    const { data: user, isLoading } = usersApi.useGetUserQuery(userId ?? skipToken); // skipToken если userId не нужен
+    // но лучше хук вообще не вызывать
+    const [deleteUser, { isLoading: isLoadingDelete, error }] = usersApi.useDeleteUserMutation();
+
+
     // const userData = useAppSelector((state) => usersSlice.selectors.selectUserData(state, userId))
+
+    if (!user) {
+        return <p>Пользователь не найден</p>
+    }
     const { name, description, id } = user;
 
     const goBack = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -32,10 +40,12 @@ export function UserPage(props: UserPageProps) {
         navigate("..", { relative: "path" })
     }
 
+
     const deleteCard = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
-       const result = await dispatch(deleteUser(userId))
-       // navigate может быть здесь
+        //    const result = await dispatch(deleteUser(userId))
+        // navigate может быть здесь
+        deleteUser(userId);
     }
     return (
         <div className={`${classes.userCard}`}>
@@ -46,7 +56,7 @@ export function UserPage(props: UserPageProps) {
                 onClick={(e) => goBack(e)}
             >Назад</Button>
             <Button
-                onClick={(e)=> deleteCard(e)}
+                onClick={(e) => deleteCard(e)}
                 security='danger'
             >
                 Удалить
