@@ -5,7 +5,7 @@ import { router } from './Router';
 import { theme } from './theme';
 import { Provider } from 'react-redux';
 import { store } from './shared/store/store';
-import { fetchUsers } from './pages/redux/model/fetch-users';
+import { fetchUsers } from './shared/store/thunk/fetch-users';
 import { RouterProvider } from 'react-router-dom';
 
 // параллельная загрузка данных при загрузке страницы

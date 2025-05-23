@@ -1,6 +1,6 @@
 import { createSelector, PayloadAction } from '@reduxjs/toolkit';
 import { User, UserId } from '@/trash/mok-data/users';
-import { fetchUsers } from '@/pages/redux/model/fetch-users';
+import { fetchUsers } from '@/shared/store/thunk/fetch-users';
 import { createSlice } from '../redux';
 
 interface UsersState {

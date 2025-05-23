@@ -8,7 +8,7 @@ import { CountersContainer } from './pages/redux/components/counters-container';
 import { UserList } from './pages/redux/components/user-list';
 import { UserPage } from './pages/redux/components/user-page';
 import { store } from './shared/store/store';
-import { fetchUsers } from './pages/redux/model/fetch-users';
+import { fetchUsers } from './shared/store/thunk/fetch-users';
 import { usersApi } from './pages/redux/users-api';
 
 
