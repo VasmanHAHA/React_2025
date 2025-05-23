@@ -45,9 +45,10 @@ export function UserPage(props: UserPageProps) {
         event.stopPropagation();
         //    const result = await dispatch(deleteUser(userId))
         
-       await deleteUser(userId);
        // navigate может быть здесь
        navigate(`..`, {relative: 'path'})
+       await deleteUser(userId);
+
     }
     return (
         <div className={`${classes.userCard}`}>
