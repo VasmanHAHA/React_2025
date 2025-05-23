@@ -1,7 +1,16 @@
 import { User, UserId } from "@/trash/mok-data/users";
 import { z } from "zod";
+import {createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 const baseUrl = 'http://localhost:3000';
+
+export const baseApi = createApi({
+    baseQuery: fetchBaseQuery({baseUrl}),
+    endpoints:()=>({}),
+})
+
+
+// api без reduxToolkit query
 
 const userDtoSchmena = z.object({
     id: z.string(),

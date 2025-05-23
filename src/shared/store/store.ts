@@ -2,6 +2,7 @@ import { combineReducers, configureStore} from '@reduxjs/toolkit';
 import { countersReducer, } from './slices/counters.slice';
 import { usersSlice } from './slices/users.slice';
 import { extraArgument } from './extra-argument';
+import { baseApi } from './api';
 
 
 // reducer под капотом
@@ -14,10 +15,11 @@ import { extraArgument } from './extra-argument';
 const reducer = combineReducers({
   counters: countersReducer,
   [usersSlice.name]: usersSlice.reducer,
+  [baseApi.reducerPath] : baseApi.reducer,
 });
 
 export const store = configureStore({
   reducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({thunk: {extraArgument}}),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({thunk: {extraArgument}}).concat(baseApi.middleware),
 });
 

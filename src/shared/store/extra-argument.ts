@@ -1,5 +1,5 @@
 import { getRouter } from "@/Router";
-import { api } from "../api";
+import { api } from "./api";
 
 export const extraArgument = {
     api,

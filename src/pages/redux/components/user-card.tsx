@@ -1,6 +1,6 @@
 import { usersSlice } from '@/shared/store/slices/users.slice';
 import classes from './../classes.redux.page.module.css'
-import { UserId } from '@/trash/mok-data/users';
+import { User, UserId } from '@/trash/mok-data/users';
 import { memo } from 'react';
 import { useDispatch } from "react-redux";
 import { Button } from '@mantine/core';
@@ -10,17 +10,21 @@ import { useAppSelector } from '@/shared/store/redux';
 
 interface UserCardProps {
     userId: UserId;
+    user: User;
 }
 
 
 
 
-export const UserCard = memo(function UserCard({ userId }: UserCardProps) {
+export const UserCard = memo(function UserCard({ userId, user }: UserCardProps) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    // работа без rtk query
     const userData = useAppSelector((state) => usersSlice.selectors.selectUserData(state, userId))
-    const { name, description, id } = userData;
+
+    // rtq
+    const { name, description, id } = user;
 
     const selectedUserId = useAppSelector((state) => usersSlice.selectors.selectSelectedUserId(state));
     const isSelected = userId === selectedUserId;
