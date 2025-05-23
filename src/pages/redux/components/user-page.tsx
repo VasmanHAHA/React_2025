@@ -5,6 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@mantine/core';
 import { deleteUser } from '../model/delete-user';
 import { useAppDispatch, useAppSelector } from '@/shared/store/redux';
+import { usersApi } from '../users-api';
+import { skipToken } from '@reduxjs/toolkit/query';
 
 
 interface UserPageProps {
@@ -16,32 +18,14 @@ export function UserPage(props: UserPageProps) {
 
     const { userId } = useParams()
 
-    if (!userId) {
+    const {data: user, isLoading} = usersApi.useGetUserQuery(userId ?? skipToken);
+
+    if (!userId || !user) {
         return <p>Пользователь не найден</p>
     }
 
-    const userData = useAppSelector((state) => usersSlice.selectors.selectUserData(state, userId))
-    const { name, description, id } = userData;
-
-    const selectedUserId = useAppSelector((state) => usersSlice.selectors.selectSelectedUserId(state));
-    const isSelected = userId === selectedUserId;
-
-    const selectUser = () => {
-        dispatch(usersSlice.actions.selected({ userId }))
-    }
-
-    const removeUserSelection = () => {
-        dispatch(usersSlice.actions.selectRemove());
-    }
-
-    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        e.stopPropagation();
-        if (isSelected) {
-            removeUserSelection();
-        } else {
-            selectUser();
-        }
-    }
+    // const userData = useAppSelector((state) => usersSlice.selectors.selectUserData(state, userId))
+    const { name, description, id } = user;
 
     const goBack = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
@@ -54,11 +38,7 @@ export function UserPage(props: UserPageProps) {
        // navigate может быть здесь
     }
     return (
-        <div
-            className={`${classes.userCard} ${isSelected ? classes.selectedUserCard : ''
-                }`}
-            onClick={handleClick}
-        >
+        <div className={`${classes.userCard}`}>
             <h2 className={classes.userCardTitle}>User Card id:{id}</h2>
             <p className={classes.userCardName}>User Name: {name}</p>
             <p className={classes.userCardDescription}>User Description: {description}</p>
