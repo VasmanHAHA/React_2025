@@ -1,0 +1,88 @@
+.counter {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 5px;
+    gap: 10px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+.countersContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.userList {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .userFilters {
+    display: flex;
+    gap: 10px; /* Отступ между кнопками */
+    justify-content: center; /* Центрирование кнопок */
+    margin-bottom: 20px; /* Отступ снизу, чтобы отделить от списка карточек */
+    padding: 10px;
+    background-color: #fff; /* Белый фон, как у карточек */
+    border-radius: 6px; /* Закругленные углы */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Легкая тень, как у userList */
+  }
+  
+  .userListTitle {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .userCard {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: box-shadow 0.1s ease-in-out;
+    cursor: pointer;
+  }
+
+  .selectedUserCard {
+    border: 2px solid #1a73e8; /* Синяя граница, как у кнопок в приложении */
+    background-color: #e8f0fe; /* Легкий синий фон для выделения */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Более заметная тень */
+    transform: scale(1.02); /* Легкое увеличение для эффекта выделения */
+    transition: all 0.1s ease-in-out; /* Плавный переход для эффектов */
+  }
+  
+  .userCard:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .userCardTitle {
+    font-size: 18px;
+    font-weight: 500;
+    color: #1a73e8; /* Цвет, как у кнопок в вашем приложении */
+    margin-bottom: 10px;
+  }
+  
+  .userCardName {
+    font-size: 16px;
+    font-weight: 400;
+    color: #555;
+    margin: 5px 0;
+  }
+  
+  .userCardDescription {
+    font-size: 14px;
+    color: #777;
+    margin: 5px 0;
+    line-height: 1.5;
+  }
