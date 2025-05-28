@@ -11,7 +11,7 @@ export function Header() {
             <NavBar links={[
                 { to: routNames.home, title: 'домой' },
                 {to: routNames.tests, title:'Тесты', description: 'Тестирую работу незнакомых библиотек и подходов'},
-                { to: routNames.redux, title: 'Redux', description: 'Redux по курсу Паромова' },
+                { to: routNames.redux, title: 'Redux', description: 'Redux base exploring' },
                 { to: routNames.mantine, title: 'Mantine', description: ' Приветственная страница Mantine' },
             ]} />
             <ThemeController />
