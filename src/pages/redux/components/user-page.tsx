@@ -46,7 +46,7 @@ export function UserPage(props: UserPageProps) {
     const { name, description, id } = user;
 
         // rtq + thunk
-        const { isLoading: isLoadingDeleteThunk } = useAppSelector(usersApi.endpoints.deleteUser.select(id ?? skipToken));
+        // const { isLoading: isLoadingDeleteThunk } = useAppSelector(usersApi.endpoints.deleteUser.select(id ?? skipToken));
 
     const goBack = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
